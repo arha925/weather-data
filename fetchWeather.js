@@ -11,8 +11,8 @@ const cities = require('./cities.js');
 const WEATHER_API = 'https://api.open-meteo.com/v1/cma';
 const AIR_API = 'https://air-quality-api.open-meteo.com/v1/air-quality';
 const FORECAST_DAYS = 16;
-const CONCURRENCY = 20;
-const RETRIES = 3;
+const CONCURRENCY = 5;   // 降低并发，避免 Open-Meteo 免费层 429 限流
+const RETRIES = 5;       // 提高重试次数，扛住瞬时限流
 
 // ---- 以下纯映射与小程序的 utils/util.js、utils/api.js parseDailyForecasts 保持一致 ----
 // 这样生成的 weather.json 字段与小程序的解析结果完全对齐，排行榜/详情页可直接消费。

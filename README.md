@@ -8,7 +8,7 @@ GitHub 公开仓库 + jsDelivr CDN + GitHub Actions 定时生成。小程序只�
 1. GitHub Actions 每天 **北京时间 06:00**（UTC 22:00）运行 `fetchWeather.js`；
 2. 脚本用 Open-Meteo（CMA 模型，免费、无需 key）抓取 431 城天气 + 空气质量，生成 `weather.json`；
 3. Actions 把 `weather.json` 提交回仓库；
-4. 小程序通过 `https://cdn.jsdelivr.net/gh/<你的用户名>/<仓库名>@main/weather.json` 读取共享数据。
+4. 小程序通过 `https://cdn.jsdelivr.net/gh/arha925/weather-data@main/weather.json` 读取共享数据。
 
 - Open-Meteo 免费额度充足（日抓 ~862 次，远低于上限）；
 - jsDelivr 免费、全球 CDN、无带宽焦虑；
@@ -31,7 +31,7 @@ GitHub 公开仓库 + jsDelivr CDN + GitHub Actions 定时生成。小程序只�
 改 `miniprogram/utils/cache.js` 顶部的常量：
 
 ```js
-var SHARED_JSON_URL = 'https://cdn.jsdelivr.net/gh/<你的用户名>/<仓库名>@main/weather.json';
+var SHARED_JSON_URL = 'https://cdn.jsdelivr.net/gh/arha925/weather-data@main/weather.json';
 ```
 
 `getWeather(..., 'hybrid')` 会优先读这份共享 JSON（首次拉全量、之后内存命中），读不到再回落本地 / 直连源头。
