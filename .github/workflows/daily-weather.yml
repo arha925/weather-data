@@ -29,3 +29,17 @@ jobs:
         with:
           commit_message: 'chore: daily weather update'
           file_pattern: 'weather.json'
+
+      # jsDelivr 对 @main 分支别名的边缘缓存长达 12 小时，
+      # 不主动清除的话，小程序全天读到的可能都是昨天的数据。
+      - name: 清除 jsDelivr 缓存
+        run: |
+          echo "purge CDN cache..."
+          curl -s "https://purge.jsdelivr.net/gh/arha925/weather-data@main/weather.json"
+          echo ""
+          echo "等待 CDN 回源..."
+          sleep 15
+          echo "验证线上数据日期:"
+          curl -s "https://cdn.jsdelivr.net/gh/arha925/weather-data@main/weather.json" \
+            | head -c 200
+          echo ""
