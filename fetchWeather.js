@@ -99,14 +99,15 @@ function todayStrShanghai() {
 }
 
 // 生成未来 FORECAST_DAYS 天的日期序列（以北京时间今天为起点）
+// 关键：无论运行环境时区如何，都用 Asia/Shanghai 显式格式化每一天，
+// 避免此前用本地时区 getDate() 回读 +08:00 构造的 Date 导致整体回偏一天。
 function targetDates() {
   const base = new Date(todayStrShanghai() + 'T00:00:00+08:00');
   const out = [];
   for (let i = 0; i < FORECAST_DAYS; i++) {
-    const d = new Date(base.getTime() + i * 86400000);
-    out.push(d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0'));
+    const t = base.getTime() + i * 86400000;
+    const s = new Date(t).toLocaleDateString('en-CA', { timeZone: 'Asia/Shanghai' });
+    out.push(s);
   }
   return out;
 }
